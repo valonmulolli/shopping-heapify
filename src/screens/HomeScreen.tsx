@@ -13,6 +13,7 @@ const HomeScreen = () => {
 	return (
 		<ScrollView>
 			<SafeAreaView>
+				{/* Header */}
 				<View
 					style={{
 						paddingHorizontal: 24,
@@ -58,6 +59,52 @@ const HomeScreen = () => {
 						}}
 					>
 						<Icons name='notifications' size={24} color={colors.text} />
+					</TouchableOpacity>
+				</View>
+				{/* Search Bar */}
+				<View style={{ flexDirection: 'row', paddingHorizontal: 24, gap: 12 }}>
+					<TouchableOpacity
+						style={{
+							flex: 1,
+							height: 52,
+							borderRadius: 52,
+							borderWidth: 1,
+							borderColor: colors.border,
+							alignItems: 'center',
+							paddingHorizontal: 24,
+							flexDirection: 'row',
+							gap: 12,
+						}}
+					>
+						<Icons
+							name='search'
+							size={24}
+							color={colors.text}
+							style={{ opacity: 0.5 }}
+						/>
+						<Text
+							style={{
+								flex: 1,
+								fontSize: 16,
+								color: colors.text,
+								opacity: 0.5,
+							}}
+						>
+							Search
+						</Text>
+					</TouchableOpacity>
+
+					<TouchableOpacity
+						style={{
+							width: 52,
+							aspectRatio: 1,
+							alignItems: 'center',
+							justifyContent: 'center',
+							borderRadius: 52,
+							backgroundColor: colors.primary,
+						}}
+					>
+						<Icons name='tune' size={24} color={colors.background} />
 					</TouchableOpacity>
 				</View>
 			</SafeAreaView>
