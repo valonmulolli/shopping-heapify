@@ -1,15 +1,33 @@
-import { View, Text, Image, ScrollView, TouchableOpacity } from 'react-native';
-import React from 'react';
+import {
+	View,
+	Text,
+	Image,
+	ScrollView,
+	TouchableOpacity,
+	FlatList,
+} from 'react-native';
+import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme } from '@react-navigation/native';
 import Icons from '@expo/vector-icons/MaterialIcons';
+
+const CATEGORIES = [
+	'Clothing',
+	'Shoes',
+	'Accessories',
+	'Jewelry',
+	'Bags',
+	'Watches',
+	'Beauty',
+	'Gifts',
+];
 
 const AVATAR_URL =
 	'https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=688&q=80';
 
 const HomeScreen = () => {
 	const { colors } = useTheme();
-
+	const [categoryIndex, setCategoryIndex] = useState(0);
 	return (
 		<ScrollView>
 			<SafeAreaView style={{ paddingVertical: 24, gap: 24 }}>
@@ -125,7 +143,6 @@ const HomeScreen = () => {
 						</TouchableOpacity>
 					</View>
 					<View style={{ flexDirection: 'row', height: 200, gap: 12 }}>
-						{/* Card */}
 						<Card />
 						<View style={{ flex: 1, gap: 12 }}>
 							<Card />
@@ -133,6 +150,43 @@ const HomeScreen = () => {
 						</View>
 					</View>
 				</View>
+				{/* Categories */}
+				<FlatList
+					data={CATEGORIES}
+					horizontal
+					showsHorizontalScrollIndicator={false}
+					contentContainerStyle={{
+						paddingHorizontal: 16,
+						gap: 16,
+					}}
+					renderItem={({ item, index }) => {
+						const isSelected = categoryIndex === index;
+						return (
+							<TouchableOpacity
+								onPress={() => setCategoryIndex(index)}
+								style={{
+									backgroundColor: isSelected ? colors.primary : colors.card,
+									paddingHorizontal: 24,
+									paddingVertical: 16,
+									borderRadius: 100,
+									borderWidth: isSelected ? 0 : 1,
+									borderColor: colors.border,
+								}}
+							>
+								<Text
+									style={{
+										color: isSelected ? colors.background : colors.text,
+										fontWeight: '600',
+										fontSize: 16,
+										opacity: isSelected ? 1 : 0.5,
+									}}
+								>
+									{item}
+								</Text>
+							</TouchableOpacity>
+						);
+					}}
+				/>
 			</SafeAreaView>
 		</ScrollView>
 	);
@@ -151,7 +205,9 @@ const Card = () => {
 			}}
 		>
 			<Image
-				source={{uri: 'https://images.unsplash.com/photo-1560769629-975ec94e6a86?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80',}}
+				source={{
+					uri: 'https://images.unsplash.com/photo-1560769629-975ec94e6a86?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80',
+				}}
 				resizeMode='cover'
 				style={{
 					position: 'absolute',
@@ -172,8 +228,10 @@ const Card = () => {
 					borderRadius: 100,
 				}}
 			>
-				<Text style={{ fontSize: 14, fontWeight: '600', color: '#fff' }}>€130</Text>
+				<Text style={{ fontSize: 14, fontWeight: '600', color: '#fff' }}>
+					€130
+				</Text>
 			</View>
 		</View>
-	)
+	);
 };
