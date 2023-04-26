@@ -12,12 +12,11 @@ const HomeScreen = () => {
 
 	return (
 		<ScrollView>
-			<SafeAreaView>
+			<SafeAreaView style={{ paddingVertical: 24, gap: 24 }}>
 				{/* Header */}
 				<View
 					style={{
 						paddingHorizontal: 24,
-						paddingVertical: 24,
 						flexDirection: 'row',
 						alignItems: 'center',
 						gap: 8,
@@ -107,9 +106,74 @@ const HomeScreen = () => {
 						<Icons name='tune' size={24} color={colors.background} />
 					</TouchableOpacity>
 				</View>
+				{/* Grid Collection */}
+				<View style={{ paddingHorizontal: 24 }}>
+					{/* Title */}
+					<View
+						style={{
+							flexDirection: 'row',
+							alignItems: 'center',
+							justifyContent: 'space-between',
+							marginBottom: 12,
+						}}
+					>
+						<Text style={{ fontSize: 20, fontWeight: '700' }}>
+							New Collections
+						</Text>
+						<TouchableOpacity>
+							<Text>See All</Text>
+						</TouchableOpacity>
+					</View>
+					<View style={{ flexDirection: 'row', height: 200, gap: 12 }}>
+						{/* Card */}
+						<Card />
+						<View style={{ flex: 1, gap: 12 }}>
+							<Card />
+							<Card />
+						</View>
+					</View>
+				</View>
 			</SafeAreaView>
 		</ScrollView>
 	);
 };
 
 export default HomeScreen;
+
+const Card = () => {
+	return (
+		<View
+			style={{
+				flex: 1,
+				position: 'relative',
+				overflow: 'hidden',
+				borderRadius: 24,
+			}}
+		>
+			<Image
+				source={{uri: 'https://images.unsplash.com/photo-1560769629-975ec94e6a86?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80',}}
+				resizeMode='cover'
+				style={{
+					position: 'absolute',
+					top: 0,
+					left: 0,
+					right: 0,
+					bottom: 0,
+				}}
+			/>
+			<View
+				style={{
+					position: 'absolute',
+					left: 16,
+					top: 16,
+					paddingHorizontal: 16,
+					paddingVertical: 10,
+					backgroundColor: 'rgba(0,0,0,0.25)',
+					borderRadius: 100,
+				}}
+			>
+				<Text style={{ fontSize: 14, fontWeight: '600', color: '#fff' }}>€130</Text>
+			</View>
+		</View>
+	)
+};
