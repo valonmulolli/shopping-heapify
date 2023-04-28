@@ -3,6 +3,7 @@ import {
 	Text,
 	Image,
 	ScrollView,
+	StyleSheet,
 	TouchableOpacity,
 	FlatList,
 } from 'react-native';
@@ -10,6 +11,8 @@ import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme } from '@react-navigation/native';
 import Icons from '@expo/vector-icons/MaterialIcons';
+import MasonryList from '@react-native-seoul/masonry-list';
+import { BlurView } from 'expo-blur';
 
 const CATEGORIES = [
 	'Clothing',
@@ -187,6 +190,100 @@ const HomeScreen = () => {
 						);
 					}}
 				/>
+
+				{/* Masonary */}
+				<MasonryList
+					data={[1, 2, 45, 1, 5, 3, 234]}
+					keyExtractor={(item): string => item}
+					numColumns={2}
+					contentContainerStyle={{ paddingHorizontal: 16 }}
+					renderItem={({ item, i }) => (
+						<View style={{ padding: 6}}>
+							<View
+								style={{
+									aspectRatio: i === 0 ? 1 : 2 / 3,
+									position: 'relative',
+									overflow: 'hidden',
+									borderRadius: 24,
+								}}
+							>
+								<Image
+									source={{
+										uri: 'https://images.pexels.com/photos/2529148/pexels-photo-2529148.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+									}}
+									resizeMode='cover'
+									style={StyleSheet.absoluteFill}
+								/>
+								<View style={[StyleSheet.absoluteFill, { padding: 10 }]}>
+									<View style={{ flexDirection: 'row', gap: 8, padding: 1 }}>
+										<Text
+											style={{
+												flex: 1,
+												fontSize: 16,
+												fontWeight: '600',
+												color: colors.text,
+											}}
+										>
+											New Collections
+										</Text>
+										<View
+											style={{
+												backgroundColor: colors.background,
+												borderRadius: 100,
+												height: 24,
+												aspectRatio: 1,
+												alignItems: 'center',
+												justifyContent: 'center',
+											}}
+										>
+											<Icons
+												name='favorite-border'
+												size={20}
+												color={colors.text}
+											/>
+										</View>
+									</View>
+									<View style={{ flex: 1 }} />
+									<BlurView
+										style={{
+											flexDirection: 'row',
+											alignItems: 'center',
+											backgroundColor: 'rgba(0,0,0,0.35)',
+											padding: 8,
+											borderRadius: 100,
+											overflow: 'hidden',
+										}}
+										intensity={10}
+									>
+										<Text
+											style={{
+												flex: 1,
+												color: '#919191',
+												fontSize: 16,
+												fontWeight: '600',
+												marginLeft: 4,
+											}}
+											numberOfLines={1}
+										>
+											€160.00
+										</Text>
+										<TouchableOpacity
+											style={{
+												paddingHorizontal: 12,
+												paddingVertical: 8,
+												borderRadius: 100,
+												backgroundColor: '#fff',
+											}}
+										>
+											<Icons name='shopping-bag' size={20} color='#000' />
+										</TouchableOpacity>
+									</BlurView>
+								</View>
+							</View>
+						</View>
+					)}
+					onEndReachedThreshold={0.1}
+				/>
 			</SafeAreaView>
 		</ScrollView>
 	);
@@ -206,7 +303,7 @@ const Card = () => {
 		>
 			<Image
 				source={{
-					uri: 'https://images.unsplash.com/photo-1560769629-975ec94e6a86?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80',
+					uri: 'https://images.unsplash.com/photo-1577982787983-e07c6730f2d3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1248&q=80',
 				}}
 				resizeMode='cover'
 				style={{
