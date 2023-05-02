@@ -7,12 +7,14 @@ import {
 	TouchableOpacity,
 	FlatList,
 } from 'react-native';
-import React, { useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme } from '@react-navigation/native';
 import Icons from '@expo/vector-icons/MaterialIcons';
 import MasonryList from '@react-native-seoul/masonry-list';
 import { BlurView } from 'expo-blur';
+import { BottomSheetModal } from '@gorhom/bottom-sheet';
+import CustomBackdrop from '../components/CustomBackdrop';
 
 const CATEGORIES = [
 	'Clothing',
@@ -31,6 +33,14 @@ const AVATAR_URL =
 const HomeScreen = () => {
 	const { colors } = useTheme();
 	const [categoryIndex, setCategoryIndex] = useState(0);
+	const bottomSheetModalRef = useRef<BottomSheetModal>(null);
+
+	// const snapPoints = useMemo(() => ['25%', '50%'], []);
+
+	// callbacks
+	const openFilterModal = useCallback(() => {
+		bottomSheetModalRef.current?.present();
+	}, []);
 	return (
 		<ScrollView>
 			<SafeAreaView style={{ paddingVertical: 24, gap: 24 }}>
@@ -115,6 +125,7 @@ const HomeScreen = () => {
 					</TouchableOpacity>
 
 					<TouchableOpacity
+						onPress={openFilterModal}
 						style={{
 							width: 52,
 							aspectRatio: 1,
@@ -198,7 +209,7 @@ const HomeScreen = () => {
 					numColumns={2}
 					contentContainerStyle={{ paddingHorizontal: 16 }}
 					renderItem={({ item, i }) => (
-						<View style={{ padding: 6}}>
+						<View style={{ padding: 6 }}>
 							<View
 								style={{
 									aspectRatio: i === 0 ? 1 : 2 / 3,
@@ -258,7 +269,7 @@ const HomeScreen = () => {
 										<Text
 											style={{
 												flex: 1,
-												color: '#919191',
+												color: '#0E201E',
 												fontSize: 16,
 												fontWeight: '600',
 												marginLeft: 4,
@@ -285,6 +296,15 @@ const HomeScreen = () => {
 					onEndReachedThreshold={0.1}
 				/>
 			</SafeAreaView>
+
+			<BottomSheetModal
+				snapPoints={['80%']}
+				index={0}
+				ref={bottomSheetModalRef}
+				backdropComponent={(props) => <CustomBackdrop {...props} />}
+			>
+				<Text>Modal</Text>
+			</BottomSheetModal>
 		</ScrollView>
 	);
 };

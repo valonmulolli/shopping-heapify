@@ -10,6 +10,7 @@ import {
 import { useMemo } from 'react';
 import 'react-native-gesture-handler';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import BottomSheet, { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 
 export default function App() {
 	const theme: Theme = useMemo(
@@ -18,7 +19,7 @@ export default function App() {
 			colors: {
 				...DefaultTheme.colors,
 				background: '#D9FF00',
-				text: '#191919',
+				text: '#0E201E',
 				border: '#D9D9D9',
 				primary: '#191919',
 			},
@@ -28,7 +29,9 @@ export default function App() {
 	return (
 		<GestureHandlerRootView style={styles.container}>
 			<NavigationContainer theme={theme}>
-				<RootNavigator />
+				<BottomSheetModalProvider>
+					<RootNavigator />
+				</BottomSheetModalProvider>
 				<StatusBar style='dark' />
 			</NavigationContainer>
 		</GestureHandlerRootView>
