@@ -16,6 +16,7 @@ import { BlurView } from 'expo-blur';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import CustomBackdrop from '../components/CustomBackdrop';
 import FilterView from '../components/FilterView';
+import { TabsStackScreenProps } from '../navigators/TabsNavigator';
 
 const CATEGORIES = [
 	'Clothing',
@@ -31,10 +32,43 @@ const CATEGORIES = [
 const AVATAR_URL =
 	'https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=688&q=80';
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }: TabsStackScreenProps<'Home'>) => {
 	const { colors } = useTheme();
 	const [categoryIndex, setCategoryIndex] = useState(0);
 	const bottomSheetModalRef = useRef<BottomSheetModal>(null);
+
+	const MESONARY_LIST_DATA = [
+		{
+			imageUrl:
+				'https://images.unsplash.com/photo-1521577352947-9bb58764b69a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=986&q=80',
+			title: 'PUMA Everyday Hussle',
+			price: 160,
+		},
+		{
+			imageUrl:
+				'https://images.unsplash.com/photo-1586790170083-2f9ceadc732d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80',
+			title: 'PUMA Everyday Hussle',
+			price: 180,
+		},
+		{
+			imageUrl:
+				'https://images.unsplash.com/photo-1556217477-d325251ece38?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1020&q=80',
+			title: 'PUMA Everyday Hussle',
+			price: 200,
+		},
+		{
+			imageUrl:
+				'https://images.unsplash.com/photo-1554568218-0f1715e72254?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80',
+			title: 'PUMA Everyday Hussle',
+			price: 180,
+		},
+		{
+			imageUrl:
+				'https://images.unsplash.com/photo-1627225924765-552d49cf47ad?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80',
+			title: 'PUMA Everyday Hussle',
+			price: 120,
+		},
+	];
 
 	// const snapPoints = useMemo(() => ['25%', '50%'], []);
 
@@ -154,14 +188,38 @@ const HomeScreen = () => {
 							New Collections
 						</Text>
 						<TouchableOpacity>
-							<Text>See All</Text>
+							<Text style={{ color: colors.primary }}>See All</Text>
 						</TouchableOpacity>
 					</View>
 					<View style={{ flexDirection: 'row', height: 200, gap: 12 }}>
-						<Card />
+						<Card
+							onPress={() => {
+								navigation.navigate('Details', {
+									id: '123',
+								});
+							}}
+							price={130}
+							imageUrl='https://images.unsplash.com/photo-1564584217132-2271feaeb3c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2340&q=80'
+						/>
 						<View style={{ flex: 1, gap: 12 }}>
-							<Card />
-							<Card />
+							<Card
+								onPress={() => {
+									navigation.navigate('Details', {
+										id: '456',
+									});
+								}}
+								price={120}
+								imageUrl='https://images.unsplash.com/photo-1571945153237-4929e783af4a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80'
+							/>
+							<Card
+								onPress={() => {
+									navigation.navigate('Details', {
+										id: '789',
+									});
+								}}
+								price={170}
+								imageUrl='https://images.unsplash.com/photo-1485218126466-34e6392ec754?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2342&q=80'
+							/>
 						</View>
 					</View>
 				</View>
@@ -205,7 +263,7 @@ const HomeScreen = () => {
 
 				{/* Masonary */}
 				<MasonryList
-					data={[1, 2, 45, 1, 5, 3, 234]}
+					data={MESONARY_LIST_DATA}
 					keyExtractor={(item): string => item}
 					numColumns={2}
 					contentContainerStyle={{ paddingHorizontal: 16 }}
@@ -304,7 +362,7 @@ const HomeScreen = () => {
 				ref={bottomSheetModalRef}
 				backdropComponent={(props) => <CustomBackdrop {...props} />}
 			>
-				<FilterView/>
+				<FilterView />
 			</BottomSheetModal>
 		</ScrollView>
 	);
@@ -312,9 +370,18 @@ const HomeScreen = () => {
 
 export default HomeScreen;
 
-const Card = () => {
+const Card = ({
+	price,
+	imageUrl,
+	onPress,
+}: {
+	price: number;
+	imageUrl: string;
+	onPress?: () => void;
+}) => {
 	return (
-		<View
+		<TouchableOpacity
+			onPress={onPress}
 			style={{
 				flex: 1,
 				position: 'relative',
@@ -350,6 +417,6 @@ const Card = () => {
 					€130
 				</Text>
 			</View>
-		</View>
+		</TouchableOpacity>
 	);
 };
