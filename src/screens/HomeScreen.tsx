@@ -361,6 +361,9 @@ const HomeScreen = ({ navigation }: TabsStackScreenProps<'Home'>) => {
 				index={0}
 				ref={bottomSheetModalRef}
 				backdropComponent={(props) => <CustomBackdrop {...props} />}
+				backgroundStyle={{
+					borderRadius: 24
+				}}
 			>
 				<FilterView />
 			</BottomSheetModal>
